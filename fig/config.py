@@ -1,8 +1,11 @@
 import os
+import json
 import yaml
 
 
 class Config(object):
+    _loaded_config = {}
+
     @classmethod
     def _load_defaults(cls):
         cls.load_defaults_from("defaults.yaml")
@@ -24,6 +27,7 @@ class Config(object):
             override_config_dict = yaml.safe_load(f)
 
         cls._flatten_dict_and_setattr(override_config_dict)
+        cls._loaded_config.update(override_config_dict)
 
     @classmethod
     def load_toml(cls, path_to_toml_file):
@@ -54,3 +58,15 @@ class Config(object):
     @classmethod
     def _load_cli_args(cls):
         raise NotImplementedError("TODO")
+
+    @classmethod
+    def as_dict(cls):
+        return cls._loaded_config
+
+    @classmethod
+    def as_json(cls, **kwargs):
+        return json.dumps(cls._loaded_config, **kwargs)
+
+    @classmethod
+    def show(cls):
+        print(cls.as_json(sort_keys=False, indent=4))
