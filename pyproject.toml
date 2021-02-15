@@ -5,7 +5,7 @@ description = "Some cheeky pun about configuration and the fruits of your labour
 authors = ["Julian True <julian.allan.true@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.6"
 pyyaml = "*"
 toml = "*"
 
